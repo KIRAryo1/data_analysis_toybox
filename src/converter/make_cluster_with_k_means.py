@@ -21,8 +21,6 @@ def badge_similarity(b1, b2):
         return b1.iat[2] * b2.iat[2] / (1 + abs(b1.iat[2] - b2.iat[2]))
 
 u_b = process_make_user_coordinate(badge_list)
-print(badge_similarity(u_b.iloc[1,:], u_b.iloc[5,:]))
-print(badge_similarity(u_b.iloc[1,:], u_b.iloc[6,:]))
 
 u1 = u_b[1:5]
 u2 = u_b[5:9]
@@ -30,13 +28,11 @@ u2 = u_b[5:9]
 def user_similarity(u1, u2):
     sim = 0
     for index1, row1 in u1.iterrows():
-        print(type(row1))
         for index2, row2 in u2.iterrows():
             sim += badge_similarity(row1, row2)
 
     return sim
 
-print(user_similarity(u1, u2))
-
 with open(file_out, mode='w') as f:
+    f.write(str(user_similarity(u1, u2)))
     f.write(process_make_user_coordinate(badge_list).to_string())

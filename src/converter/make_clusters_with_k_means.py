@@ -25,13 +25,35 @@ def generate_centroid_seed(languages):
 
 centroid_seed = generate_centroid_seed(languages)
 
-def 
-
 def centroid_user_distance(cent, user):
-    dist = 0
-    for index1, row1 in cent.iterrows():
-        for index2, row2 in u2.iterrows():
-            sim += badge_similarity(row1, row2)
+    for index_c, row_c in cent.iterrows():
+        sum_c = 0
+        for index1, row1 in user.iterrows():
+            # print(np.sqrt(sum((cent[row1['name']] - row1['rank'])**2)))
+            sum_c += (row_c[row1['name']] - row1['rank'])**2
 
-    return sim
+        print(index_c, np.sqrt(sum_c))
+
+    return 0
+
+def user_groupby(u_b):
+    return u_b.groupby(['id'])
+
+def user_ids(u_b):
+    return u_b.groupby(['id']).groups.keys()
+
+def user_badge_fill_with_zero(user, languages):
+    df = pd.DataFrame(columns=languages)
+    df.loc[user.loc[0]['id']] = 0
+    return df
+
+
+u_b = process_make_user_coordinate(badge_list)
+uids = user_ids(u_b)
+# print(user_groupby(u_b).get_group(1))
+print(user_groupby(u_b).get_group(1))
+print(user_badge_fill_with_zero(user_groupby(u_b).get_group(1), languages))
+# print(centroid_seed)
+#
+# centroid_user_distance(centroid_seed, user_groupby(u_b).get_group(1))
 

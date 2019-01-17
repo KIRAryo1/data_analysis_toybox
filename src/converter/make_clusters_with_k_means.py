@@ -45,6 +45,9 @@ def user_ids(u_b):
 def user_badge_fill_with_zero(user, languages):
     df = pd.DataFrame(columns=languages)
     df.loc[user.loc[0]['id']] = 0
+    for index, row in user.iterrows():
+        df.loc[user.loc[0]['id']][row['name']] = row['rank']
+
     return df
 
 
